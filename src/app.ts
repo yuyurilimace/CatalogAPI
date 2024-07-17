@@ -1,8 +1,8 @@
-const expressApp = require("./expressConfig");
+import { app } from "./expressConfig";
 const port = 3001;
 
 const StartCatalogApi = () => {
-  expressApp.listen(port, () => {
+  app.listen(port, () => {
     console.log(`API Listening on port ${port}`);
   });
 };
