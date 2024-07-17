@@ -13,11 +13,14 @@
   "author": "Jose Yuri Lima Lira",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.17.0",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
+    "prisma": "^5.17.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
   }
