@@ -13,29 +13,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+model User {
+  id String @id @default(uuid())
+  name String
+  password String
+  profile Profile @relation(fields: [profileId],references: [id])
+  profileId String
+  collection BookCollection []
 }
+
 
 model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+  id    String     @id @default(uuid())
+  type  String
+  users User[]
 }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  profile Profile?
+model Publisher {
+ id    String     @id @default(uuid())
+ name String
+ titles Title[]
 }
+
+model Title {
+  id    String     @id @default(uuid())
+  name String
+  author String
+  finished Boolean
+  publisher Publisher @relation(fields: [publisherId],references: [id])
+  publisherId String
+  volumes ReleasedVolumes[]
+}
+
+model ReleasedVolumes {
+   id    String     @id @default(uuid())
+   name String
+   title Title @relation(fields: [titleId],references: [id])
+   titleId String 
+   bookCollection BookCollection[]
+}
+
+model BookCollection {
+  id    String     @id @default(uuid())
+  user User @relation(fields: [userId],references: [id])
+  userId String
+  title ReleasedVolumes @relation(fields: [volumeId],references: [id])
+  volumeId String
+}
+
+
+
