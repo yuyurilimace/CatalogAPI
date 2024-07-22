@@ -1,6 +1,7 @@
 import { app } from "./expressConfig";
 import { PrismaClient } from "@prisma/client";
 import "dotenv/config";
+
 const port = 3001;
 const prismaClient = new PrismaClient();
 
