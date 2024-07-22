@@ -6,12 +6,16 @@ export const userRepository: UserRepository = {
   createUser: async (user: User) => {
     const prisma = new PrismaClient();
     const userCreated = await prisma.user.create({
-      data: { ...user, profile: { connect: { id: user.profile.id } } },
+      data: {
+        ...user,
+        profile: { connect: { type: user.profile.type } },
+      },
       select: {
-        profile: { select: { id: true, type: true } },
+        profile: { select: { type: true } },
         id: true,
         name: true,
         password: true,
+        email: true,
       },
     });
     return userCreated;
@@ -21,43 +25,46 @@ export const userRepository: UserRepository = {
     const prisma = new PrismaClient();
     const updateUser = await prisma.user.update({
       where: { id: user.id },
-      data: { ...user, profile: { connect: { id: user.profile.id } } },
+      data: { ...user, profile: { connect: { id: user.profile.type } } },
       select: {
         profile: { select: { id: true, type: true } },
         id: true,
         name: true,
         password: true,
+        email: true,
       },
     });
     return updateUser;
   },
 
-  deleteUser: async (user: User) => {
+  deleteUser: async (userId: string) => {
     const prisma = new PrismaClient();
-    const deletedUser = prisma.user.delete({
-      include: { profile: true },
-      where: { id: user.id },
-    });
     const deleteUserBooks = prisma.bookCollection.deleteMany({
-      where: { userId: user.id },
+      where: { userId: userId },
     });
+    const deletedUser = prisma.user.delete({
+      include: { profile: { select: { type: true } } },
+      where: { id: userId },
+    });
+
     const transaction = await prisma.$transaction([
-      deletedUser,
       deleteUserBooks,
+      deletedUser,
     ]);
 
-    return transaction[0];
+    return transaction[1];
   },
 
-  getUser: async (user: User) => {
+  getUser: async (userId: string) => {
     const prisma = new PrismaClient();
     const gettedUser = await prisma.user.findFirst({
-      where: { name: user.name, password: user.password, id: user.id },
+      where: { id: userId },
       select: {
-        profile: { select: { id: true, type: true } },
+        profile: { select: { type: true } },
         id: true,
         name: true,
         password: true,
+        email: true,
       },
     });
 

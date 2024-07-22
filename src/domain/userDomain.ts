@@ -2,42 +2,44 @@ import { PrismaClient } from "@prisma/client";
 import { User } from "../types/userType";
 import { userRepository } from "../repository/userRepository";
 import { UserDTO } from "../DTO/UserDTO";
+import { UserMappping } from "../mapping/userMapping";
 
 export const UserDomain = {
-  CreateNewUser: async (prisma: PrismaClient, user: User): Promise<UserDTO> => {
+  CreateNewUser: async (
+    prisma: PrismaClient,
+    userDTO: UserDTO
+  ): Promise<UserDTO> => {
+    const user = UserMappping.DTOToModel(userDTO);
     const newUser = await userRepository.createUser(user);
-    const newUserDTO: UserDTO = {
-      name: newUser.name,
-      profile: newUser.profile.type,
-      password: newUser.password,
-    };
+    const newUserDTO = UserMappping.ModelToDTO(newUser);
     return newUserDTO;
   },
-  UpdateUser: async (prisma: PrismaClient, user: User): Promise<UserDTO> => {
+  UpdateUser: async (
+    prisma: PrismaClient,
+    userDTO: UserDTO
+  ): Promise<UserDTO> => {
+    const user = UserMappping.DTOToModel(userDTO);
     const updatedUser = await userRepository.updateUser(user);
-    const updatedUserDTO: UserDTO = {
-      name: updatedUser.name,
-      profile: updatedUser.profile.type,
-      password: updatedUser.password,
-    };
+    const updatedUserDTO = UserMappping.ModelToDTO(updatedUser);
     return updatedUserDTO;
   },
-  DeleteUser: async (prisma: PrismaClient, user: User): Promise<UserDTO> => {
-    const deletedUser = await userRepository.updateUser(user);
-    const deletedUserDTO: UserDTO = {
-      name: deletedUser.name,
-      profile: deletedUser.profile.type,
-      password: deletedUser.password,
-    };
+  DeleteUser: async (
+    prisma: PrismaClient,
+    userId: string
+  ): Promise<UserDTO> => {
+    const deletedUser = await userRepository.deleteUser(userId);
+    const deletedUserDTO = UserMappping.ModelToDTO(deletedUser);
     return deletedUserDTO;
   },
-  GetUser: async (prisma: PrismaClient, user: User): Promise<UserDTO> => {
-    const gettedUser = await userRepository.updateUser(user);
-    const gettedUserDTO: UserDTO = {
-      name: gettedUser.name,
-      profile: gettedUser.profile.type,
-      password: gettedUser.password,
-    };
-    return gettedUserDTO;
+  GetUser: async (
+    prisma: PrismaClient,
+    userId: string
+  ): Promise<UserDTO | null> => {
+    const gettedUser = await userRepository.getUser(userId);
+    if (gettedUser) {
+      const gettedUserDTO = UserMappping.ModelToDTO(gettedUser);
+      return gettedUserDTO;
+    }
+    return null;
   },
 };
