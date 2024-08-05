@@ -1,3 +1,4 @@
-import { Publisher } from "../types/publisherType";
-
-export type PublisherDTO = Publisher;
+export type PublisherDTO = {
+  id: string;
+  name?: string;
+};
