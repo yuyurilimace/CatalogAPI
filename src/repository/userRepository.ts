@@ -25,7 +25,7 @@ export const userRepository: UserRepository = {
     const prisma = new PrismaClient();
     const updateUser = await prisma.user.update({
       where: { id: user.id },
-      data: { ...user, profile: { connect: { id: user.profile.type } } },
+      data: { ...user, profile: { connect: { type: user.profile.type } } },
       select: {
         profile: { select: { id: true, type: true } },
         id: true,
