@@ -31,12 +31,10 @@ const HandleAsyncFunction = <T>(
   ) => {
     try {
       const data: T = await func(req.body);
-      res
-        .status(responseStatus)
-        .send({
-          message: responseMessage,
-          ...(responseStatus === HTTPStatusCode.Ok && data),
-        });
+      res.status(responseStatus).send({
+        message: responseMessage,
+        ...(responseStatus === HTTPStatusCode.Ok && data),
+      });
     } catch (err) {
       ExpectionHandler(err, res);
       next();
