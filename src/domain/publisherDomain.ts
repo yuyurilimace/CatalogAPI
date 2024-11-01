@@ -2,9 +2,16 @@ import { PublisherDTO } from "../DTO/publisherDTO";
 import { PublisherRepository } from "../repository/publisherRepository";
 
 const PublisherDomain = {
-  CreateNewPublisher: async (publisherName: string): Promise<PublisherDTO> => {
-    const newProfile = await PublisherRepository.CreatePublisher(publisherName);
-    return newProfile;
+  CreateNewPublisher: async (
+    publisherName: string | undefined
+  ): Promise<PublisherDTO> => {
+    if (publisherName) {
+      const newProfile = await PublisherRepository.CreatePublisher(
+        publisherName
+      );
+      return newProfile;
+    }
+    throw new Error("Campo publisherName não foi enviado");
   },
 
   UpdatePublisher: async ({
