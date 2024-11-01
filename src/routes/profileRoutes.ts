@@ -3,9 +3,14 @@ import { HandleAsyncFunction } from "../utils/handleErros";
 import { ProfileDTO } from "../DTO/ProfileDTO";
 import { ProfileDomain } from "../domain/profileDomain";
 import { HTTPStatusCode } from "../enuns/response";
+import { verify } from "jsonwebtoken";
+import { HandleAuthorization } from "../utils/handleAuthorization";
+import { Authorization } from "../middlewares/authorization";
 
 const ProfileRoutes = () => {
   const router = Router();
+
+  router.use("/", HandleAuthorization(Authorization, "admin"));
 
   router.post(
     "/create",
