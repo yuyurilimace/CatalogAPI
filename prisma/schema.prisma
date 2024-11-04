@@ -55,7 +55,7 @@ model ReleasedVolumes {
 }
 
 model BookCollection {
-  id    String     @id @default(uuid())
+  @@id(name: "collection_id",[userId,volumeId])
   user User @relation(fields: [userId],references: [id])
   userId String
   title ReleasedVolumes @relation(fields: [volumeId],references: [id])
