@@ -7,13 +7,14 @@ export const TitleDomain = {
     author,
     finished,
     publisher: { name: publisherName = "", id: publisherId },
-    ...titleDTOProps
+    releasedVolumes,
   }: TitleDTO) => {
     const createdTitle = await TitleRepository.CreateTitle({
       name,
       author,
       finished,
       publisher: { name: publisherName, id: publisherId },
+      releasedVolumes,
     });
     return createdTitle;
   },
