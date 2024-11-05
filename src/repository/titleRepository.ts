@@ -8,6 +8,7 @@ const TitleRepository: TitleRepository = {
     author,
     finished,
     publisher: { id: publisherId },
+    releasedVolumes,
   }: Title) => {
     const newTitle = await prismaClient.title.create({
       data: {
@@ -15,6 +16,9 @@ const TitleRepository: TitleRepository = {
         author,
         finished,
         publisher: { connect: { id: publisherId } },
+        ...(releasedVolumes && {
+          volumes: { createMany: { data: releasedVolumes } },
+        }),
       },
       include: { publisher: true },
     });

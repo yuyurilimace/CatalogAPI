@@ -8,7 +8,7 @@ type ReleasedVolumes = {
 
 type TitleDTO = Omit<Title, "releasedVolumes" | "publisher"> & {
   publisher: PublisherDTO;
-  releasedVolume?: ReleasedVolumes[];
+  releasedVolumes?: ReleasedVolumes[];
 };
 
 export { TitleDTO };
