@@ -33,17 +33,23 @@ export const TitleDomain = {
       publisher: { name: publisherName, id: publisherId },
       id,
     };
-    const updatedUser = await TitleRepository.UpdateTitle(uptadeUser);
-    return updatedUser;
+    const updatedTitle = await TitleRepository.UpdateTitle(uptadeUser);
+    return updatedTitle;
   },
 
   DeleteTitle: async (titleId: string) => {
-    const deletedUser = await TitleRepository.DeleteTitle(titleId);
-    return deletedUser;
+    if (titleId) {
+      const deletedTitle = await TitleRepository.DeleteTitle(titleId);
+      return deletedTitle;
+    }
+    throw new Error("id inválido");
   },
 
   GetTitle: async (titleId: string) => {
-    const title = await TitleRepository.GetTitle(titleId);
-    return title;
+    if (titleId) {
+      const title = await TitleRepository.GetTitle(titleId);
+      return title;
+    }
+    throw new Error("id inválido");
   },
 };
