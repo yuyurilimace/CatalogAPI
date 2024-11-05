@@ -40,7 +40,7 @@ export const userRepository: UserRepository = {
   deleteUser: async (userId: string) => {
     const prisma = new PrismaClient();
     const deleteUserBooks = prisma.bookCollection.deleteMany({
-      where: { userId: userId },
+      where: { user_id: userId },
     });
     const deletedUser = prisma.user.delete({
       include: { profile: { select: { type: true } } },

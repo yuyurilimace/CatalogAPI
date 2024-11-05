@@ -19,13 +19,13 @@ const PublisherRepository: PublisherRepository = {
 
   DeletePublisher: async (publisherId: string) => {
     const deletePublisherTitles = prismaClient.title.deleteMany({
-      where: { publisherId: publisherId },
+      where: { publisher_id: publisherId },
     });
     const deletedVolumes = prismaClient.releasedVolumes.deleteMany({
-      where: { title: { publisherId: publisherId } },
+      where: { title: { publisher_id: publisherId } },
     });
     const deletedCollections = prismaClient.bookCollection.deleteMany({
-      where: { title: { title: { publisherId: publisherId } } },
+      where: { title: { title: { publisher_id: publisherId } } },
     });
     const deletedPublisher = prismaClient.publisher.delete({
       where: { id: publisherId },

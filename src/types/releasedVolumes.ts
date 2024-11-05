@@ -3,6 +3,6 @@ import { Title } from "./titleType";
 export type ReleasedVolumes = {
   id?: string;
   name: string;
-  titleId: string;
+  title_id: string;
   title?: Title;
 };

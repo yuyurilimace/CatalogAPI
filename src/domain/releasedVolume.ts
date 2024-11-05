@@ -3,16 +3,18 @@ import { ReleasedVolumesRepository } from "../repository/releasedVolumesReposito
 
 const ReleasedVolumesDomain = {
   CreateVolume: async (releasedVolume: ReleasedVolumesDTO) => {
-    const createdVolume = await ReleasedVolumesRepository.CreateVolume(
-      releasedVolume
-    );
+    const createdVolume = await ReleasedVolumesRepository.CreateVolume({
+      ...releasedVolume,
+      title_id: releasedVolume.titleId,
+    });
     return createdVolume;
   },
 
   UpdateVolume: async (releasedVolume: ReleasedVolumesDTO) => {
-    const updateVolume = await ReleasedVolumesRepository.UpdateVolume(
-      releasedVolume
-    );
+    const updateVolume = await ReleasedVolumesRepository.UpdateVolume({
+      ...releasedVolume,
+      title_id: releasedVolume.titleId,
+    });
     return updateVolume;
   },
   DeleteVolume: async (releasedVolumes: ReleasedVolumesDTO) => {
