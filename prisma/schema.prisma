@@ -18,8 +18,8 @@ model User {
   name String
   email String @unique
   password String
-  profile Profile @relation(fields: [profileId],references: [id])
-  profileId String
+  profile Profile @relation(fields: [profile_id],references: [id])
+  profile_id String
   collection BookCollection []
 }
 
@@ -41,26 +41,26 @@ model Title {
   name String
   author String
   finished Boolean
-  publisher Publisher @relation(fields: [publisherId],references: [id])
-  publisherId String
+  publisher Publisher @relation(fields: [publisher_id],references: [id])
+  publisher_id String
   volumes ReleasedVolumes[]
-  @@unique([publisherId,name])
+  @@unique([publisher_id,name])
 }
 
 model ReleasedVolumes {
    id    String     @id @default(uuid())
-   name String
-   title Title @relation(fields: [titleId],references: [id])
-   titleId String 
+   name String @unique
+   title Title @relation(fields: [title_id],references: [id])
+   title_id String 
    bookCollection BookCollection[]
 }
 
 model BookCollection {
-  @@id(name: "collection_id",[userId,volumeId])
-  user User @relation(fields: [userId],references: [id])
-  userId String
-  title ReleasedVolumes @relation(fields: [volumeId],references: [id])
-  volumeId String
+  @@id(name: "collection_id",[user_id,volume_id])
+  user User @relation(fields: [user_id],references: [id])
+  user_id String
+  title ReleasedVolumes @relation(fields: [volume_id],references: [id])
+  volume_id String
 }
 
 

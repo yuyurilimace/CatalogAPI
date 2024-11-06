@@ -33,7 +33,7 @@ const TitleRepository: TitleRepository = {
   }: Title) => {
     const updateTitle = await prismaClient.title.update({
       where: { id: id },
-      data: { id: id, name, author, finished, publisherId },
+      data: { id: id, name, author, finished, publisher_id: publisherId },
       include: { publisher: true, volumes: true },
     });
     return updateTitle;

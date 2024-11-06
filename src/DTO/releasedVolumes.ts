@@ -1,3 +1,5 @@
 import { ReleasedVolumes } from "../types/releasedVolumes";
 
-export type ReleasedVolumesDTO = ReleasedVolumes;
+export type ReleasedVolumesDTO = Omit<ReleasedVolumes, "title_id"> & {
+  titleId: string;
+};

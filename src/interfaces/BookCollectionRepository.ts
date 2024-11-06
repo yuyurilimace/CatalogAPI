@@ -8,6 +8,10 @@ export interface BookCollectionRepository {
   updateBookCollection: (
     bookCollectionDTO: BookCollectionDTO
   ) => Promise<BookCollection>;
-  deleteBookCollection: (collectionID: string) => Promise<BookCollection>;
-  getBookCollection: (collectionID: string) => Promise<BookCollection | null>;
+  deleteBookCollection: (
+    bookCollectionDTO: BookCollectionDTO
+  ) => Promise<BookCollection>;
+  getBookCollection: (
+    bookCollectionDTO: BookCollectionDTO
+  ) => Promise<BookCollection | null>;
 }

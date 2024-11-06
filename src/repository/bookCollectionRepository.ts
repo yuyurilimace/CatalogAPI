@@ -11,20 +11,35 @@ const BookCollectionRepository: BookCollectionRepository = {
   },
   updateBookCollection: async (collection: BookCollection) => {
     const updatedCollection = await prismaClient.bookCollection.update({
-      where: { id: collection.id ?? "" },
+      where: {
+        collection_id: {
+          user_id: collection.user_id,
+          volume_id: collection.volume_id,
+        },
+      },
       data: collection,
     });
     return updatedCollection;
   },
-  deleteBookCollection: async (collectionId: string) => {
+  deleteBookCollection: async (collection: BookCollection) => {
     const deletedCollection = await prismaClient.bookCollection.delete({
-      where: { id: collectionId },
+      where: {
+        collection_id: {
+          user_id: collection.user_id,
+          volume_id: collection.volume_id,
+        },
+      },
     });
     return deletedCollection;
   },
-  getBookCollection: async (collectionId: string) => {
-    const gettedCollection = await prismaClient.bookCollection.findFirst({
-      where: { id: collectionId },
+  getBookCollection: async (collection: BookCollection) => {
+    const gettedCollection = await prismaClient.bookCollection.findUnique({
+      where: {
+        collection_id: {
+          user_id: collection.user_id,
+          volume_id: collection.volume_id,
+        },
+      },
     });
     return gettedCollection;
   },

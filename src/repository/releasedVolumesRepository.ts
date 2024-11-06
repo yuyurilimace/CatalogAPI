@@ -3,9 +3,9 @@ import { ReleasedVolumes } from "../types/releasedVolumes";
 import { prismaClient } from "../utils/primaConfig";
 
 const ReleasedVolumesRepository: ReleasedVolumesRepository = {
-  CreateVolume: async ({ name, titleId }: ReleasedVolumes) => {
+  CreateVolume: async ({ name, title_id }: ReleasedVolumes) => {
     const newVolume = await prismaClient.releasedVolumes.create({
-      data: { name, title: { connect: { id: titleId } } },
+      data: { name, title: { connect: { id: title_id } } },
     });
     return newVolume;
   },
