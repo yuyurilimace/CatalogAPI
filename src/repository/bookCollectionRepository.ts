@@ -1,3 +1,4 @@
+import { BookCollectionDTO } from "../DTO/BookCollectionDTO";
 import { BookCollectionRepository } from "../interfaces/BookCollectionRepository";
 import { BookCollection } from "../types/BookCollection";
 import { prismaClient } from "../utils/primaConfig";
@@ -9,15 +10,15 @@ const BookCollectionRepository: BookCollectionRepository = {
     });
     return newBookCollection;
   },
-  updateBookCollection: async (collection: BookCollection) => {
+  updateBookCollection: async (collection: BookCollectionDTO) => {
     const updatedCollection = await prismaClient.bookCollection.update({
       where: {
         collection_id: {
           user_id: collection.user_id,
-          volume_id: collection.volume_id,
+          volume_id: collection.volume_update_id,
         },
       },
-      data: collection,
+      data: { user_id: collection.user_id, volume_id: collection.volume_id },
     });
     return updatedCollection;
   },

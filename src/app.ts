@@ -6,6 +6,7 @@ import { ProfileRoutes } from "./routes/profileRoutes";
 import { PublisherRoutes } from "./routes/publisherRouter";
 import { TitleRouter } from "./routes/titleRoutes";
 import { ReleasedVolumesRoutes } from "./routes/releasedVolumes";
+import { BookCollectionRoutes } from "./routes/bookCollectionRoutes";
 
 const port = 3001;
 const prismaClient = new PrismaClient();
@@ -18,6 +19,7 @@ const StartCatalogApi = () => {
   app.use("/publisher", PublisherRoutes());
   app.use("/title", TitleRouter());
   app.use("/releasedVolumes", ReleasedVolumesRoutes());
+  app.use("/collection", BookCollectionRoutes());
 
   app.listen(process.env.PORT, () => {
     console.log(`API Listening on port ${port}`);
