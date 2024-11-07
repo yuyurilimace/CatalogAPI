@@ -12,12 +12,12 @@ const BookCollectionDomain = {
       await BookCollectionRepository.updateBookCollection(bookCollectionDTO);
     return updatedCollection;
   },
-  deleteCollection: async (bookCollectionID: string) => {
+  deleteCollection: async (bookCollectionID: BookCollectionDTO) => {
     const deletedCollection =
       await BookCollectionRepository.deleteBookCollection(bookCollectionID);
     return deletedCollection;
   },
-  getCollection: async (bookCollectionId: string) => {
+  getCollection: async (bookCollectionId: BookCollectionDTO) => {
     const collection = await BookCollectionRepository.getBookCollection(
       bookCollectionId
     );
